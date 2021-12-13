@@ -1,0 +1,45 @@
+.cardDiv {
+    position: relative;
+    background-color: beige;
+    color: black;
+    width: 45%;
+    height: 100px;
+    margin: 5px;
+    /* padding: 5px; */
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardDivImg {
+    width: 100px;
+    height: auto;
+    float: left;
+    margin-right: 10px;
+    transition: transform 0.2s;
+}
+
+.cardDiv img:hover {
+    cursor: pointer;
+    transform: scale(2);
+    z-index: 1;
+}
+
+
+/* .imgClick {
+    transform: scale(0.5);
+    z-index: 1;
+} */
+
+.cardDiv p {
+    font-size: 1rem;
+}
+
+.cardDiv p:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.centerVertical {
+    display: flex;
+    align-items: center;
+}

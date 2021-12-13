@@ -1,0 +1,11 @@
+.center {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.app {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
