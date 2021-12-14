@@ -17,12 +17,11 @@ const Navigation = ({ isSignedIn, isAbout, routeChange }) => {
             </nav>
         );
     }
-    // } else {
-    //     return (
-    //         <p style={{ margin: '0', padding: '0' }}>ahoj</p>
-    //     );
-    // }
-
+    else {
+        return (
+            <p style={{ margin: '0', padding: '0' }}>ahoj</p>
+        );
+    }
 }
 
 export default Navigation;

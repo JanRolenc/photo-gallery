@@ -16,7 +16,8 @@ class App extends Component {
       isSignedIn: false,
       isAbout: false,
       filterinput: '',
-      cards: []
+      cards: [],
+      inputPassword: ''
     }
   }
   componentDidMount() {
@@ -27,6 +28,34 @@ class App extends Component {
   onSearchChange = (event) => {
     this.setState({ filterinput: event.target.value })
   }
+  onPasswordChange = (event) => {
+    this.setState({ inputPassword: event.target.value })
+    // console.log(this.state.inputPassword);
+  }
+  onConfirmClick = () => {
+    fetch('http://localhost:3000/confirm', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({
+        input: this.state.inputPassword
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data === 'error loggin in') {
+          window.alert('The password is incorrect')
+        } else if (data === 'the password is not filled in') {
+          window.alert('The password must be filled in')
+        } else {
+          window.alert('The passwort is correct, wait a sec...')
+          this.setState({ isSignedIn: true });
+          this.setState({ route: 'home' });
+
+        }
+      })
+  }
+
   onRouteChange = (route) => {
     if (route === 'signout') {
       this.setState({ isSignedIn: false })
@@ -47,7 +76,10 @@ class App extends Component {
         ?
         <div className="app">
           <Name className='center' />
-          <SignIn routeChange={this.onRouteChange} />
+          <SignIn
+            passwordChange={this.onPasswordChange}
+            confirmClick={this.onConfirmClick}
+          />
         </div>
         : (
           this.state.route === 'home'
@@ -55,7 +87,7 @@ class App extends Component {
             <div>
               <Navigation
                 isSignedIn={this.state.isSignedIn}
-                isSignedInAbout={this.state.isSignedInAbout}
+                isAbout={this.state.isAbout}
                 routeChange={this.onRouteChange}
               />
               <Filterinput searchChange={this.onSearchChange} />
@@ -77,7 +109,10 @@ class App extends Component {
                 :
                 <div className="app">
                   <Name className='center' />
-                  <SignIn routeChange={this.onRouteChange} />
+                  <SignIn
+                    passwordChange={this.onPasswordChange}
+                    confirmClick={this.onConfirmClick}
+                  />
                 </div>
             )
         )
