@@ -35,7 +35,7 @@ class App extends Component {
   onConfirmClick = () => {
     fetch('https://boiling-dawn-61906.herokuapp.com/confirm', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         input: this.state.inputPassword
       })
