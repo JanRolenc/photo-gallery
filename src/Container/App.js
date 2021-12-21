@@ -33,7 +33,7 @@ class App extends Component {
     // console.log(this.state.inputPassword);
   }
   onConfirmClick = () => {
-    fetch('https://serene-dusk-97389.herokuapp.com/confirm', {
+    fetch('https://boiling-dawn-61906.herokuapp.com/confirm', {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
