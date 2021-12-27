@@ -20,6 +20,7 @@ class App extends Component {
       filterinput: '',
       cards: [],
       inputPassword: '',
+      inputEmail: '',
       inputName: ''
     }
   }
@@ -35,6 +36,9 @@ class App extends Component {
     this.setState({ inputPassword: event.target.value })
     // console.log(this.state.inputPassword);
   }
+  onEmailChange = (event) => {
+    this.setState({ inputEmail: event.target.value })
+  }
   onNameChange = (event) => {
     this.setState({ inputName: event.target.value })
   }
@@ -44,6 +48,7 @@ class App extends Component {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         name: this.state.inputName,
+        email: this.state.inputEmail,
         password: this.state.inputPassword
       })
     })
@@ -130,6 +135,7 @@ class App extends Component {
               />
               <Register
                 passwordChange={this.onPasswordChange}
+                emailChange={this.onEmailChange}
                 nameChange={this.onNameChange}
                 registerClick={this.onRegisterClick}
               />
