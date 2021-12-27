@@ -132,7 +132,7 @@ class App extends Component {
               <Register
                 passwordChange={this.onPasswordChange}
                 nameChange={this.onNameChange}
-                signinClick={this.onSignInClick}
+                registerClick={this.onRegisterClick}
               />
             </div>
             : (
