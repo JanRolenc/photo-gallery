@@ -1,11 +1,10 @@
-.center {
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
+.app {
+    min-height: 100vh;
 }
 
-.app {
-    text-align: center;
-    margin: 0;
-    padding: 0;
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
 }

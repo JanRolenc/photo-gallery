@@ -1,4 +1,11 @@
+.divName {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 h1 {
     margin: 0;
-    padding-top: 5%;
+    padding-top: 3%;
 }

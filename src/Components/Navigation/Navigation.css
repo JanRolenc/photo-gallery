@@ -6,8 +6,7 @@
 .nav p {
     font-size: 1.5rem;
     padding: 0.5rem;
-    margin-top: 0.5rem;
-    margin-bottom: 2.5rem;
+    margin: 1rem;
     transition: all ease-in-out;
     /* transition: all 0.2s ease-in-out; */
     /*obrazovka se po najeti mysi na signout trepe! musel jsem 0.2s vymazat*/

@@ -6,6 +6,7 @@ import Filterinput from '../Components/Filterinput/Filterinput';
 import About from '../Components/About/About';
 import Scroll from '../Components/Scroll/Scroll';
 import Cards from '../Components/Cards/Cards';
+import Register from '../Components/Register/Register';
 import './App.css';
 
 class App extends Component {
@@ -15,9 +16,11 @@ class App extends Component {
       route: 'signin',
       isSignedIn: false,
       isAbout: false,
+      isRegister: false,
       filterinput: '',
       cards: [],
-      inputPassword: ''
+      inputPassword: '',
+      inputName: ''
     }
   }
   componentDidMount() {
@@ -32,12 +35,38 @@ class App extends Component {
     this.setState({ inputPassword: event.target.value })
     // console.log(this.state.inputPassword);
   }
-  onConfirmClick = () => {
+  onNameChange = (event) => {
+    this.setState({ inputName: event.target.value })
+  }
+  onRegisterClick = () => {
+    fetch('https://boiling-dawn-61906.herokuapp.com/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: this.state.inputName,
+        password: this.state.inputPassword
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data === 'the password or name is not filled in') {
+          window.alert('The password and name must be filled in')
+        } else {
+          // window.alert('The passwort is correct, wait a sec...')
+          this.setState({ isSignedIn: true });
+          this.setState({ route: 'home' });
+
+        }
+      })
+  }
+  onSignInClick = () => {
     fetch('https://boiling-dawn-61906.herokuapp.com/confirm', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        input: this.state.inputPassword
+        name: this.state.inputName,
+        password: this.state.inputPassword
       })
     })
       .then(response => response.json())
@@ -64,6 +93,9 @@ class App extends Component {
     } else if (route === 'about') {
       this.setState({ isAbout: true })
       this.setState({ isSignedIn: false })
+    } else if (route === 'register') {
+      this.setState({ isRegister: true })
+      this.setState({ isSignedIn: false })
     }
     this.setState({ route: route });
   }
@@ -75,48 +107,78 @@ class App extends Component {
       this.state.route === 'signin'
         ?
         <div className="app">
+          <Navigation
+            isSignedIn={this.state.isSignedIn}
+            isAbout={this.state.isAbout}
+            routeChange={this.onRouteChange}
+          />
           <Name className='center' />
           <SignIn
             passwordChange={this.onPasswordChange}
-            confirmClick={this.onConfirmClick}
+            signinClick={this.onSignInClick}
           />
+
         </div>
         : (
-          this.state.route === 'home'
+          this.state.route === 'register'
             ?
-            <div>
+            <div className="app">
               <Navigation
                 isSignedIn={this.state.isSignedIn}
                 isAbout={this.state.isAbout}
+                isRegister={this.state.isRegister}
                 routeChange={this.onRouteChange}
               />
-              <Filterinput searchChange={this.onSearchChange} />
-              <Scroll>
-                <Cards cards={filteredCards} />
-              </Scroll>
+              <Register
+                passwordChange={this.onPasswordChange}
+                nameChange={this.onNameChange}
+                signinClick={this.onSignInClick}
+              />
             </div>
             : (
-              this.state.route === 'about'
+              this.state.route === 'home'
                 ?
-                <div>
+                <div className="app">
                   <Navigation
                     isSignedIn={this.state.isSignedIn}
                     isAbout={this.state.isAbout}
+                    isRegister={this.state.isRegister}
                     routeChange={this.onRouteChange}
                   />
-                  <About />
+                  <Filterinput searchChange={this.onSearchChange} />
+                  <Scroll>
+                    <Cards cards={filteredCards} />
+                  </Scroll>
                 </div>
-                :
-                <div className="app">
-                  <Name className='center' />
-                  <SignIn
-                    passwordChange={this.onPasswordChange}
-                    confirmClick={this.onConfirmClick}
-                  />
-                </div>
+                : (
+                  this.state.route === 'about'
+                    ?
+                    <div className="app">
+                      <Navigation
+                        isSignedIn={this.state.isSignedIn}
+                        isAbout={this.state.isAbout}
+                        isRegister={this.state.isRegister}
+                        routeChange={this.onRouteChange}
+                      />
+                      <About />
+                    </div>
+                    :
+                    <div className="app">
+                      <Navigation
+                        isSignedIn={this.state.isSignedIn}
+                        isAbout={this.state.isAbout}
+                        isRegister={this.state.isRegister}
+                        routeChange={this.onRouteChange}
+                      />
+                      <Name className='center' />
+                      <SignIn
+                        passwordChange={this.onPasswordChange}
+                        signinClick={this.onSignInClick}
+                      />
+                    </div>
+                )
             )
         )
-
 
     );
   }
