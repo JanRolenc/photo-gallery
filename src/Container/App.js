@@ -61,7 +61,7 @@ class App extends Component {
       })
   }
   onSignInClick = () => {
-    fetch('https://boiling-dawn-61906.herokuapp.com/confirm', {
+    fetch('https://boiling-dawn-61906.herokuapp.com/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
