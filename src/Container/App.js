@@ -34,7 +34,7 @@ class App extends Component {
   }
   onPasswordChange = (event) => {
     this.setState({ inputPassword: event.target.value })
-    // console.log(this.state.inputPassword);
+    console.log(this.state.inputPassword);
   }
   onEmailChange = (event) => {
     this.setState({ inputEmail: event.target.value })
@@ -66,7 +66,7 @@ class App extends Component {
       })
   }
   onSignInClick = () => {
-    fetch('https://boiling-dawn-61906.herokuapp.com/signin', {
+    fetch('http://localhost:3000/signin', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
