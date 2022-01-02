@@ -29,6 +29,11 @@ class App extends Component {
       .then(response => response.json())
       .then(photos => this.setState({ cards: photos }));
   }
+  // componentDidMount() {
+  //   fetch('http://localhost:3000/')
+  //     .then(response => response.json())
+  //     .then(console.log);
+  // }
   onSearchChange = (event) => {
     this.setState({ filterinput: event.target.value })
   }
@@ -42,56 +47,11 @@ class App extends Component {
   onNameChange = (event) => {
     this.setState({ inputName: event.target.value })
   }
-  onRegisterClick = () => {
-    fetch('https://boiling-dawn-61906.herokuapp.com/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: this.state.inputName,
-        email: this.state.inputEmail,
-        password: this.state.inputPassword
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        if (data === 'the password or name is not filled in') {
-          window.alert('The password and name must be filled in')
-        } else {
-          // window.alert('The passwort is correct, wait a sec...')
-          this.setState({ isSignedIn: true });
-          this.setState({ route: 'home' });
-
-        }
-      })
-  }
-  onSignInClick = () => {
-    fetch('http://localhost:3000/signin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        password: this.state.inputPassword
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        if (data === 'error loggin in') {
-          window.alert('The password is incorrect')
-        } else if (data === 'the password is not filled in') {
-          window.alert('The password must be filled in')
-        } else {
-          window.alert('The passwort is correct, wait a sec...')
-          this.setState({ isSignedIn: true });
-          this.setState({ route: 'home' });
-
-        }
-      })
-  }
-
   onRouteChange = (route) => {
-    if (route === 'signout') {
-      this.setState({ isSignedIn: false })
+    if (route === 'signin') {
+      this.setState({ isSignedIn: false });
+      this.setState({ isRegister: false });
+      this.setState({ isAbout: false });
     } else if (route === 'home') {
       this.setState({ isSignedIn: true })
     } else if (route === 'about') {
@@ -103,6 +63,51 @@ class App extends Component {
     }
     this.setState({ route: route });
   }
+
+  onRegisterClick = () => {
+    fetch('https://serene-plateau-03206.herokuapp.com/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: this.state.inputName,
+        email: this.state.inputEmail,
+        password: this.state.inputPassword
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'some data is not filled in') {
+          window.alert('Fill all in please');
+          this.onRouteChange('register');
+        } else {
+          window.alert('Registration successful');
+          this.onRouteChange('home');
+        }
+      })
+  }
+
+  onSignInClick = () => {
+    fetch('https://serene-plateau-03206.herokuapp.com/signin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        password: this.state.inputPassword
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data === 'error loggin in') {
+          window.alert('The password is not correct');
+        } else if (data === 'the password is not filled in') {
+          window.alert('The password must be filled in');
+        } else {
+          window.alert('The password is correct, wait a sec...');
+          this.onRouteChange('home');
+        }
+      })
+  }
+
+
   render() {
     const filteredCards = this.state.cards.filter(item => {
       return item.title.toLowerCase().includes(this.state.filterinput.toLowerCase());
@@ -114,6 +119,7 @@ class App extends Component {
           <Navigation
             isSignedIn={this.state.isSignedIn}
             isAbout={this.state.isAbout}
+            isRegister={this.state.isRegister}
             routeChange={this.onRouteChange}
           />
           <Name className='center' />
@@ -123,7 +129,8 @@ class App extends Component {
           />
 
         </div>
-        : (
+        :
+        (
           this.state.route === 'register'
             ?
             <div className="app">
@@ -184,7 +191,6 @@ class App extends Component {
                 )
             )
         )
-
     );
   }
 }

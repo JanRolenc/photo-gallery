@@ -1,7 +1,7 @@
 import React from 'react';
 import './Register.css';
 
-const Register = ({ passwordChange, nameChange, registerClick }) => {
+const Register = ({ passwordChange, emailChange, nameChange, registerClick }) => {
     return (
         <div className="center">
 
@@ -17,7 +17,7 @@ const Register = ({ passwordChange, nameChange, registerClick }) => {
                     placeholder="Set Name"
                 />
                 <input
-                    onChange={passwordChange}
+                    onChange={emailChange}
                     className="registerInput"
                     type="email"
                     name="email"

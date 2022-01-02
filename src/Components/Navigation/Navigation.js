@@ -7,7 +7,7 @@ const Navigation = ({ isSignedIn, isAbout, routeChange, isRegister }) => {
         return (
             <nav className="nav">
                 <p onClick={() => routeChange('about')}>About</p>
-                <p onClick={() => routeChange('signin')}>Sign Out</p>
+                <p onClick={() => routeChange('signin')}>SignOut</p>
             </nav>
         );
     } else if (isAbout) {
